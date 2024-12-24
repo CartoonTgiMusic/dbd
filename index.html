@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+</head>
+ <style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main-ctn{
+    /* width: 100vw; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0 150px;
+}
+.nav-bar{
+    position: fixed;
+    top: 0;
+    background-color:green;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    div{
+        width: 25%;
+    }
+    button{
+        top: 7px;
+        right: 5px;
+        position: absolute;
+        width: 50px;
+        background: none;
+        border: none;
+        color: white;
+    }
+}
+
+.footer{
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    padding: 5px;
+    background: green;
+}
+.inputs-ctn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    width: 100%;
+  input{
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.btns-ctn{
+    display: flex;
+    float: right;
+    button{
+        padding: 0 10px;
+        height: 30px;
+        margin-left: 10px;
+        background-color:rgb(0, 15, 128);
+        color: white;
+        text-align: center;
+        line-height: 30px;
+        border: none;
+        border-radius: 5px;
+    }
+}
+
+.display-ctn{
+    width: 100vw;
+    padding: 5px;
+}
+.item-div{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(197, 197, 197);
+    margin-bottom: 5px;
+    div{
+        width: 25%;
+        padding: 2px 0;
+    }
+    button{
+        width: 100%;
+        text-align: end;
+        background:none;
+        border: none;
+        padding-right: 5px;
+    }
+}
+.enter-date{
+    font-size: 10px;
+}
+.item-div:nth-child(odd){
+    background-color: rgb(153, 150, 150);
+    color: white;
+}
+.save-ctn{
+    width: 100%;
+    padding:20px 5px;
+}
+.search-ctn{
+    position: fixed;
+    top: 30px;
+    right: 5px;
+    h4{
+        color: red;
+        padding: 0 0 10px;
+    }
+}
+
+.save-div{
+    width: 100%;
+    margin: 5px 0;
+    /* background-color: rgb(171, 170, 170); */
+}
+
+.no-time{
+    display: flex;
+    background-color:rgb(111, 255, 0);
+    width: 100%;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.save-item{
+    width: 100%;
+    display: flex;
+    margin: 3px 0;
+    background-color: gainsboro;
+    justify-content: space-between;
+    div{
+        width: 25%;
+    }
+}
+
+.save-item:last-child{
+    display: none;
+}
+.savedate{
+    font-size: 10px;
+}
+.total{
+    position: fixed;
+    bottom: 0px;
+    right: 5px;
+    background-color: green;
+    color: white;
+    padding: 10px;
+}
+.delete-btn,.balance-btn{
+    padding: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.balance-btn{
+    background-color: blue;
+}
+.delete-btn:hover,
+.balance-btn:hover
+{
+    transform: scale(1.1);
+}
+.main-list{
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    input{
+        padding: 2px 5px;
+        margin-bottom: 5px
+    }
+}
+.main-list{
+    h3,h4{
+        background-color: red;
+        color: white;
+        padding: 5px 0;
+
+    }
+    h4{
+        margin-bottom: 5px;
+    }
+}
+.main-list ul{
+    background-color: gold;
+    li{
+        list-style: none;
+    }
+}
+.final-div{
+    margin: 15px 0;
+    background-color: blue;
+    color: white;
+}
+.inactive{
+    display: none;
+}
+ </style>
+<body>
+    <div class="main-ctn">
+        <div class="nav-bar">
+            <div class="no">No.</div>
+            <div class="code">Code.</div>
+            <div class="prize">Prize.</div>
+            <div class="action" ><button onclick="seeAll()">See all</button></div>
+            <div class="back-arrow inactive"><button onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></button></div>
+        </div>
+        <div class="display-ctn">
+
+        </div>
+        <div class="search-ctn inactive">
+            <input type="search" placeholder="Search..." name="search" id="search-input" class="search-input">
+            <button onclick="Search()">Submit</button>
+        </div>
+        <div class="main-list inactive">
+            <h2>Balance</h2>
+            <input type="number" placeholder="Jp number" id="jpnumber-input">
+            <input type="number" placeholder="550 or 600" id="prizex-input">
+            <input type="number" placeholder="Commition" id="commition-input">
+            <button class="mainlist-btn" onclick="Balance()">Submit</button>
+            <ul class="ul">
+               
+            </ul>
+
+        </div>
+        <div class="save-ctn inactive">
+            <div class="total">
+                <h3>Total:</h3>
+                <button class="delete-btn" onclick="deleteAll()">Delete All</button>
+                <button class="balance-btn" onclick="Balancebtn()">Balance</button>
+            </div>    
+        </div>
+        <div class="footer">
+            <div class="inputs-ctn">
+                <div>
+                    <input type="number" class="code-input" id="code_input" placeholder="Code...">
+                </div>
+                <div>
+                    <input type="number" class="prize-input" id="prize_input" placeholder="Prize..."> 
+                </div>
+            </div>
+            <div class="btns-ctn">
+                <button class="save inactive" onclick="Save()">Save</button>
+                <button onclick="triCode()">Tri</button>
+                <button onclick="Round()">R</button>
+                <button class="enter" onclick="Enter()">Enter</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+const enter = JSON.parse(localStorage.getItem('enter')) || []
+const save = JSON.parse(localStorage.getItem('save')) || []
+const totals= JSON.parse(localStorage.getItem('totals')) || []
+
+const Bank = 100000;
+const Balancebtn=()=>{
+    document.querySelector('.main-list').classList.remove('inactive')
+    document.querySelector('.save-ctn').classList.add('inactive')
+    document.querySelector('.search-ctn').classList.add('inactive')
+};
+const Balance=()=>{
+    let jpnumberInput = document.querySelector('#jpnumber-input').value;
+    let prizeXinput = document.querySelector('#prizex-input').value;
+    let commitionInput = document.querySelector('#commition-input').value;
+    let roundNums = [];
+        let numbers = [jpnumberInput];
+        numbers.forEach(number => {
+            roundNums = roundNums.concat(roundNumbers(number));
+        });
+
+        roundNums = roundNums.filter(num=> num !== jpnumberInput);
+
+    let roundPrize = {}
+    roundNums.forEach((num)=>{
+        roundPrize[num] = 0
+    })
+    save.forEach(list=>{
+        list.forEach(entry=>{
+            if(roundPrize.hasOwnProperty(entry.code)){
+                roundPrize[entry.code] += parseInt(entry.prize,10)
+            }
+        })
+    })
+
+    let totalWin = []
+    let jpPrize = 0;
+    save.forEach(list => {
+    list.forEach(prizeInfo => {
+        if (prizeInfo.code === jpnumberInput) {
+            jpPrize += parseInt(prizeInfo.prize, 0);
+        }
+    });
+});
+
+let Jackpot = jpPrize * prizeXinput
+        let h4 =document.createElement('h4')  
+        h4.innerText = `(${jpnumberInput}) = ${jpPrize} x ${prizeXinput} = ${Jackpot}/.`
+        document.querySelector('.main-list').append(h4)
+        totalWin.push(Jackpot)
+
+  for(let [key,value] of Object.entries(roundPrize)){
+    let roundPrize = value * 10
+    totalWin.push(roundPrize)
+    let ul = document.createElement('ul')
+    let li =document.createElement('li')
+    li.innerText =`(${key}) = ${value} x 10 = ${roundPrize}`
+    ul.append(li)
+    document.querySelector('.main-list').append(ul)
+}
+
+let Win =  totalWin.reduce((acc,cru)=>acc+ cru,0)
+let Income = totals.reduce((acc,cur)=>acc+ +cur,0)
+let commition = Income * (commitionInput/100)
+let finalTotal = parseInt(Win+commition-Income)
+
+
+let finalDiv = document.createElement('div')
+finalDiv.setAttribute('class', 'final-div')
+let p1 = document.createElement('p')
+p1.innerText = `Win = ${Win}/.`
+let p2 = document.createElement('p')
+p2.innerText = `Income = -${Income}/.`
+let p3 = document.createElement('p')
+p3.innerText = `Commition = ${commition}/.`
+let h3 = document.createElement('h3')
+h3.innerText = `Total = ${finalTotal}/.`
+finalDiv.append(p1,p2,p3,h3)
+document.querySelector('.main-list').append(finalDiv)
+}
+
+const Search = ()=>{
+    let searchInput = document.getElementById('search-input').value;
+    if(searchInput == '' || searchInput.length < 3){
+        alert('Enter your code')
+        return
+    }
+    let totalPrize = 0;
+    save.forEach(list => {
+    list.forEach(prizeInfo => {
+        if (prizeInfo.code === searchInput) {
+            totalPrize += parseInt(prizeInfo.prize, 0);
+        }
+    });
+});
+
+    save.forEach((list)=>{
+        list.forEach((code)=>{
+            if(searchInput == code.code){
+                    let searchUl = document.createElement('ul')
+                    searchUl.setAttribute('class', 'search-ul')
+                    let li = document.createElement('li')
+                    li.innerText = code.code +' = '+ code.prize
+                    searchUl.append(li)
+                    document.querySelector('.search-ctn').append(searchUl)
+                document.querySelector('.save-ctn').style.display = 'none'
+            }else{
+             document.getElementById('search-input').value = ''
+            }
+        })
+    })
+
+let h4 = document.createElement('h4')
+h4.innerText =`Total of... ${searchInput} = ${totalPrize}/ ks`
+document.querySelector('.search-ctn').append(h4)
+}
+
+const displayEnter = ()=>{
+    let html = ''
+    enter.forEach((item,index) => {
+        html +="<div class='item-div'>"
+        html +="<div class='enter-num'>"+(index + 1)+ '.' +"</div>"
+        html +="<div>"+item.code +"</div>"
+        html +="<div>"+item.prize +"</div>"
+        html +=`<div><button onclick='Remove(${index})'><i class="fa-solid fa-trash-can"></i></button></div>`
+        html +="</div>"
+    });
+    document.querySelector('.display-ctn').innerHTML =  html
+};
+
+const displaySave =()=>{
+    for(let i=0; i< save.length; i++){
+        let saveDiv = document.createElement('div')
+        saveDiv.setAttribute('class', 'save-div')
+        saveDiv.setAttribute('id','save_div-'+i)
+        let NoTime = document.createElement('div')
+        NoTime.setAttribute('class','no-time')
+        let Vol = document.createElement('h4')
+        Vol.innerHTML = 'Vol-'+ (i+1)
+        let date = document.createElement('h4')
+        date.innerHTML = save[i][0].date
+        let total = document.createElement('h4')
+        total.innerHTML ='Total = ' + save[i][save[i].length-1].Balance
+        NoTime.append(Vol,date,total)
+        document.querySelector('.save-ctn').append( NoTime,saveDiv)
+        let saveDivs = document.querySelectorAll('#save_div-'+i)
+        let html = ''
+        saveDivs.forEach((div)=>{
+            for(let j=1; j< save[i].length; j++){
+                html +="<div class='save-item'>"
+                html +="<div>"+(j)+'.'+"</div>"
+                html +="<div>"+save[i][j].code+"</div>"
+                html +="<div>"+save[i][j].prize+"</div>"
+                html +="<div >"+''+"</div>"
+                html +="</div>"
+            }
+            div.innerHTML = html
+        });
+    }
+};
+
+const Remove=(index)=>{
+   if(confirm('ဖျက်မှာလား?')) {
+       enter.splice(index,1)
+       localStorage.setItem('enter',JSON.stringify(enter))
+   }
+    displayEnter()
+};
+
+function roundNumbers(string) {
+    if (string.length <= 1) {
+        return [string];
+    }
+
+let permutations = new Set();
+    for (let i = 0; i < string.length; i++) {
+        let char = string[i];
+        let remainingChars = string.slice(0, i) + string.slice(i + 1);
+        for (let permutation of roundNumbers(remainingChars)) {
+            permutations.add(char + permutation);
+        }
+    }
+    return Array.from(permutations);
+};
+
+const checkOver = ()=>{
+    let CodeInput = document.querySelector('#code_input').value;
+    let PrizeInput = document.querySelector('#prize_input').value;
+    let main = {} // 123:1500, 222:1000
+    save.forEach((subArry)=>{
+        subArry.forEach((obj)=>{
+            if(main[obj.code]){
+                main[obj.code] += parseInt(obj.prize)
+            }else{
+                main[obj.code] = parseInt(obj.prize)
+            }
+        })
+    });
+    enter.forEach((item)=>{
+        if(main[item.code]){
+            main[item.code] += parseInt(item.prize)
+        }else{
+            main[item.code] = parseInt(item.prize)
+            console.log(main[item.code])
+        }
+    });
+    let Numbers = Object.keys(main) //'123','222'
+    Numbers.forEach((num)=>{
+        if(num){
+            if(main[num] > Bank){
+                let over = Bank - main[num]
+                let remain = -(+PrizeInput) - +over
+                remain = Math.abs( remain )
+                alert(num + "  is Over," + "  Remain =" + remain )
+                enter.splice(enter.length-1)
+                localStorage.setItem('enter',JSON.stringify(enter))
+                enter.push({code:num,prize:remain})
+                if(remain == 0){
+                    return enter.splice(enter.length-1)
+                }
+                localStorage.setItem('enter',JSON.stringify(enter))
+            }
+        }
+    })
+}
+
+const triCode = ()=>{
+    document.querySelector('.save').classList.remove('inactive')
+    let PrizeInput = document.querySelector('#prize_input').value;
+    let CodeInput = document.querySelector('#code_input').value;
+    
+    if(PrizeInput < 100 || PrizeInput > Bank || PrizeInput == "" ){
+        alert('Enter your prize')
+        return document.querySelector('#prize_input').value = ''
+    }
+    if(confirm('Tri ထိုးမှာလား?')){
+        let tricodes = ['000','111','222','333','444','555','666','777','888','999']
+        tricodes.forEach((code)=>{
+             code = {code:code,prize:PrizeInput}
+             enter.push(code)
+             checkOver()
+        });
+
+    }
+    document.querySelector('#code_input').value = ''
+    document.onload = displayEnter()
+};
+
+const Round=()=>{
+    document.querySelector('.save').classList.remove('inactive')
+    let CodeInput = document.querySelector('#code_input').value;
+    let PrizeInput = document.querySelector('#prize_input').value;
+
+    if(CodeInput.length <3 || CodeInput.length >3){
+        alert('Enter correct number')
+        return document.querySelector('#code_input').value = ''
+    }
+    if(PrizeInput < 100 || PrizeInput > Bank){
+        alert('Enter correct prize')
+        return document.querySelector('#prize_input').value = ''
+    }
+    let allPermutations = [];
+    let numbers = [CodeInput];
+    numbers.forEach(number => {
+        allPermutations = allPermutations.concat(roundNumbers(number));
+    });
+ 
+    allPermutations.forEach((code)=>{
+        code = {code:code,prize:PrizeInput}
+        enter.push(code)
+        checkOver()
+    });
+    document.querySelector('#code_input').value = ''
+    document.onload = displayEnter()
+};
+
+const Enter=()=>{
+    document.querySelector('.save').classList.remove('inactive')
+    let CodeInput = document.querySelector('#code_input').value;
+    let PrizeInput = document.querySelector('#prize_input').value;
+    if(CodeInput.length <3 || CodeInput.length >3){
+        alert('Enter correct number')
+        return document.querySelector('#code_input').value = ''
+    }
+    if(PrizeInput < 100 || PrizeInput > Bank){
+        alert('Enter correct prize')
+        return document.querySelector('#prize_input').value = ''
+    }
+    enter.push(
+        {   
+            code:CodeInput,
+            prize:PrizeInput,
+        }
+    );
+    localStorage.setItem('enter',JSON.stringify(enter))
+    
+    checkOver()
+    displayEnter()
+    document.querySelector('#code_input').value = ''
+};
+
+const Save=()=>{
+    if(enter == ''){
+        alert('Enter your code')
+        return enter
+    };
+    document.querySelector('.save').classList.add('inactive')
+    // let Balance = enter.reduce((acc,prize)=>acc+ +prize.prize, 0)
+    let Balance = enter.reduce((accumulator,current)=>{
+        return accumulator + parseInt(current.prize)
+    },0);
+    
+    let Now = new Date()
+    let date = Now.toLocaleString()
+    save.push(
+        [{date:date},...enter,{Balance:Balance}]
+    );
+    localStorage.setItem('save',JSON.stringify(save));
+
+    totals.push([
+        Balance
+    ]);
+
+    localStorage.setItem('totals',JSON.stringify(totals))
+    localStorage.removeItem('enter')
+    displayEnter()
+    window.location.reload()
+}
+
+const seeAll=()=>{ 
+    document.querySelector('.search-ctn').classList.remove('inactive')
+    document.querySelector('.save-ctn').classList.remove('inactive')
+    document.querySelector('.footer').classList.add('inactive')
+    document.querySelector('.action').classList.add('inactive')
+    document.querySelector('.back-arrow').classList.remove('inactive')
+    let tBalance = totals.reduce((acc,cur)=>acc+ +cur,0)
+    document.querySelector('h3').innerHTML = 'Total = ' + tBalance
+};
+
+const goBack=()=>{
+    document.querySelector('.search-ctn').classList.add('inactive')
+    document.querySelector('.save-ctn').classList.add('inactive')
+    document.querySelector('.footer').classList.remove('inactive')
+    document.querySelector('.action').classList.remove('inactive')
+    document.querySelector('.back-arrow').classList.add('inactive')
+    window.location.reload()
+};
+
+const deleteAll=()=>{
+    if(confirm('စာရင်းအကုန်ဖျက်မလား?')){
+        localStorage.clear()
+        document.querySelector('h3').innerHTML = 'Total = ' + '0'
+    }
+    window.location.reload()
+    return;
+};
+
+
+document.onload = displaySave()
+document.onload = displayEnter()
+
+</script>
+</body>
+</html>
